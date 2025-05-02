@@ -832,7 +832,7 @@
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">
-                    <img src="./images/brew-resume-logo.png" alt="Brew Resume">
+                    <img src="./images/brew.png" alt="Brew Resume">
                 </a>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -915,9 +915,9 @@
                 
                 <div class="notification-form">
                     <h3 class="form-title">Be the First to Know</h3>
-                    <form id="notify-form">
+                    <form id="notify-form" action="https://usebasin.com/f/91f03469552c" method="POST">
                         <div class="form-group">
-                            <input type="email" class="form-control" id="email" placeholder=" " required>
+                            <input type="email" name="email" class="form-control" id="email" placeholder=" " required>
                             <label for="email" class="form-label">Your Email Address</label>
                         </div>
                         <button type="submit" class="btn">Notify Me</button>
@@ -998,13 +998,20 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
-            
-            // Here you would normally send this to your backend
-            console.log('Email submitted:', email);
-            
-            // Show success message
-            form.innerHTML = '<p style="text-align: center; color: var(--primary); font-weight: 500; font-size: 1.1rem;">Thank you for your interest. We\'ll notify you when we launch.</p>';
+        
+            fetch('https://usebasin.com/f/91f03469552c', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ email: email }),
+            }).then(() => {
+                form.innerHTML = '<p style="text-align: center; color: var(--primary); font-weight: 500; font-size: 1.1rem;">Thank you for your interest. We\'ll notify you when we launch.</p>';
+            }).catch((error) => {
+                alert('Oops!! Something\'s gone wrong. Please try again.');
+            });
         });
+        
         
         // Parallax effect on scroll
         window.addEventListener('scroll', function() {
